@@ -3,13 +3,13 @@
 // Include gulp
 var gulp = require('gulp');
 var fs = require('fs');
-
 var gutil = require('gulp-util');
 var gulpPlugins = {
   concat: require('gulp-concat'),
   rename: require('gulp-rename'),
   replace: require('gulp-replace'),
-  uglify: require('gulp-uglify')
+  uglify: require('gulp-uglify'),
+  wrap: require('gulp-wrap')
 };
 var pkg = require('./package.json');
 
@@ -26,13 +26,15 @@ gulp.task('build', ['bundle']);
 gulp.task('bundle', function () {
   return gulp.src(files)
     .on('error', gutil.log)
+    .pipe(gulpPlugins.wrap({ src: 'wrapEach.tmpl' }))
     .pipe(gulpPlugins.replace(USE_STRICT_PATTERN, ''))
     .pipe(gulpPlugins.replace(REQUIRE_PATTERN, ''))
     .pipe(gulpPlugins.replace(EXPORT_PATTERN, ''))
     .pipe(gulpPlugins.concat('decimalToWords.js'))
-    .pipe(gulp.dest('./dist/'))
+    .pipe(gulpPlugins.wrap({ src: 'wrapBundle.tmpl' }, pkg, { variable: 'data' }))
+    .pipe(gulp.dest('./'))
     // Minified version
     .pipe(gulpPlugins.uglify())
     .pipe(gulpPlugins.rename('decimalToWords.min.js'))
-    .pipe(gulp.dest('./dist/'));
+    .pipe(gulp.dest('./'));
 });

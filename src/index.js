@@ -1,5 +1,5 @@
 'use strict';
 
 module.exports = {
-  toWords: require('./toWords.js')
+  toWords: require('./toWords')
 };

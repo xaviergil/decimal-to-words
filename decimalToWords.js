@@ -1,3 +1,19 @@
+/*!
+ * Decimal-To-Words util
+ * @version v0.1.1
+ * @link https://github.com/xaviergil/decimal-to-words#readme
+ * @author Xavier Gil <xavier.gil.origue@gmail.com>
+ * @contributors 
+ * @license 
+ */
+(function () {
+    'use strict';
+
+    var root = typeof self == 'object' && self.self === self && self ||
+        typeof global == 'object' && global.global === global && global ||
+        this;
+
+    // ========== file: \src\toWords.js ==========
 /**
  * Convert decimal to words
  */
@@ -132,3 +148,19 @@ function toWords(s) {
   return result.trim();
 }
 
+
+
+    var decimalToWords = {
+        toWords: toWords
+    };
+
+    if (typeof exports != 'undefined') {
+        if (typeof module != 'undefined' && module.exports) {
+            exports = module.exports = decimalToWords;
+        }
+        exports.decimalToWords = decimalToWords;
+    } else {
+        root.decimalToWords = decimalToWords;
+    }
+
+}());
